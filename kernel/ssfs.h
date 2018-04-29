@@ -14,4 +14,8 @@ void init_ssfs();
 file_struct* create_file(char* filename);
 int list_files();
 
+file_struct* open_file(char* filename);
+void write_file(file_struct* file, char* datas);
+void read_file(file_struct* file, char* datas);
+
 #endif
