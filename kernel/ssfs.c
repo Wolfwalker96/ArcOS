@@ -16,11 +16,12 @@ void init_ssfs(){
 file_struct* create_file(char* filename){
   file_struct* last_file = get_last_file();
   kmalloc(sizeof(file_struct), 1, &(last_file->next_file));
-  last_file->next_file->filename=filename;
+  kmalloc(sizeof(char)*(strlen(filename)), 1, &(last_file->next_file->filename));
+  strcopy(last_file->next_file->filename, filename);
 }
 
 int list_files(){
-  int n=1;
+  int n=0;
   file_struct* current = root_file;
   kprint("Files on the system : \n");
   while(current->next_file != 0){
@@ -30,6 +31,10 @@ int list_files(){
     kprint("\n");
     n++;
   }
+  char* n_as_str;
+  int_to_ascii(n, n_as_str);
+  kprint(n_as_str);
+  kprint(" files.");
   return n;
 }
 
