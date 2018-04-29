@@ -18,6 +18,7 @@ file_struct* create_file(char* filename){
   kmalloc(sizeof(file_struct), 1, &(last_file->next_file));
   kmalloc(sizeof(char)*(strlen(filename)), 1, &(last_file->next_file->filename));
   strcopy(last_file->next_file->filename, filename);
+  return last_file->next_file;
 }
 
 int list_files(){
@@ -55,7 +56,8 @@ void write_file(file_struct* file, char* datas){
 }
 
 void read_file(file_struct* file, char* datas){
-  kmalloc(sizeof(char)*strlen(file->data_start), 1, &datas);
+  str_clear(datas, strlen(datas));
+  kmalloc(sizeof(char)*strlen(file->data_start), 1, datas);
   strcopy(datas, file->data_start);
 }
 
