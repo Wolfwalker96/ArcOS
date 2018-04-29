@@ -97,7 +97,7 @@ void split(char s[], char* s1, char* s2){
   }
 }
 
-void strcopy(char s1[], char s2[]){
+void strcopy(char* s1, char s2[]){
   int len = strlen(s2);
   kmalloc(len*sizeof(char), 1, s1);
   int i;
