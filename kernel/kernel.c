@@ -16,9 +16,12 @@ void kernel_main() {
     asm("int $2");
     asm("int $3");
     init_ssfs();
-    create_file("PASSWORD");
-    clear_screen();
 
+    create_file("PASSWORD");
+//    file_struct* password_file = open_file("PASSWORD");
+//    write_file(password_file, "123456789");
+
+    clear_screen();
     kprint("Wellcome to ArcOS ! \nPlease enter the password : \n> ");
 }
 
@@ -61,8 +64,12 @@ void user_shell(char* input){
     create_file(arg);
     kprint(arg);
     kprint(" was created.");
-  }
-  else if(strcmp(command, "LOCK") == 0){
+  } else if(strcmp(command, "READ") == 0){
+    file_struct* file = open_file(arg);
+    char* datas;
+    read_file(file, datas);
+    kprint(datas);
+  } else if(strcmp(command, "LOCK") == 0){
     USER_LOGGED=0;
   }
   else{
