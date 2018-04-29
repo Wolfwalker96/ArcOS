@@ -4,6 +4,7 @@
 #include "../libc/string.h"
 #include "../libc/mem.h"
 #include "password.h"
+#include "ssfs.h"
 #include <stdint.h>
 
 int USER_LOGGED = 0;
@@ -14,9 +15,10 @@ void kernel_main() {
 
     asm("int $2");
     asm("int $3");
-
+    init_ssfs();
+    create_file("PASSWORD");
     clear_screen();
-    
+
     kprint("Wellcome to ArcOS ! \nPlease enter the password : \n> ");
 }
 
@@ -32,10 +34,15 @@ void user_login(char* password){
 }
 
 void user_shell(char* input){
-  if (strcmp(input, "END") == 0) {
+  char* command[512];
+  str_clear(command, 512);
+  char* arg[512];
+  str_clear(arg, 512);
+  split(input, command, arg);
+  if (strcmp(command, "END") == 0) {
       kprint("Stopping the CPU. Bye!\n");
       asm volatile("hlt");
-  } else if (strcmp(input, "PAGE") == 0) {
+  } else if (strcmp(command, "PAGE") == 0) {
       /* Lesson 22: Code to test kmalloc, the rest is unchanged */
       uint32_t phys_addr;
       uint32_t page = kmalloc(1000, 1, &phys_addr);
@@ -48,9 +55,20 @@ void user_shell(char* input){
       kprint(", physical address: ");
       kprint(phys_str);
       kprint("\n");
+  } else if (strcmp(command, "LIST") == 0) {
+    list_files();
+  }else if(strcmp(command, "CREATE") == 0){
+    create_file(arg);
+    kprint(arg);
+    kprint(" was created.");
   }
-  kprint("You said: ");
-  kprint(input);
+  else if(strcmp(command, "LOCK") == 0){
+    USER_LOGGED=0;
+  }
+  else{
+    kprint(command);
+    kprint(" is not a command !");
+  }
   kprint("\n> ");
 }
 
