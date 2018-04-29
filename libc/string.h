@@ -8,5 +8,8 @@ int strlen(char s[]);
 void backspace(char s[]);
 void append(char s[], char n);
 int strcmp(char s1[], char s2[]);
+void split(char s[], char* s1, char* s2);
+void str_clear(char s[], int length);
+void strcopy(char s1[], char s2[]);
 
 #endif

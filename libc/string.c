@@ -66,7 +66,7 @@ void backspace(char s[]) {
     s[len-1] = '\0';
 }
 
-/* K&R 
+/* K&R
  * Returns <0 if s1<s2, 0 if s1==s2, >0 if s1>s2 */
 int strcmp(char s1[], char s2[]) {
     int i;
@@ -74,4 +74,41 @@ int strcmp(char s1[], char s2[]) {
         if (s1[i] == '\0') return 0;
     }
     return s1[i] - s2[i];
+}
+
+void split(char s[], char* s1, char* s2){
+  int i=0;
+  int len = strlen(s);
+  int split = 0;
+  int split_at = 0;
+  for(i=0; i < len; i++){
+    if(s[i] != ' ' || split){
+      if(split){
+        s2[i-split_at-1] = s[i];
+      }
+      else{
+        s1[i]=s[i];
+      }
+    }
+    else{
+      split=1;
+      split_at=i;
+    }
+  }
+}
+
+void strcopy(char s1[], char s2[]){
+  int len = strlen(s2);
+  kmalloc(len*sizeof(char), 1, s1);
+  int i;
+  for (i=0;i<len;i++){
+    s1[i] = s2[i];
+  }
+}
+
+void str_clear(char s[], int length){
+  int i;
+  for(i=0;i<length;i++){
+    s[i] = '\0';
+  }
 }
