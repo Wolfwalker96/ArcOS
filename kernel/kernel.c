@@ -18,8 +18,8 @@ void kernel_main() {
     init_ssfs();
 
     create_file("PASSWORD");
-//    file_struct* password_file = open_file("PASSWORD");
-//    write_file(password_file, "123456789");
+    file_struct* password_file = open_file("PASSWORD");
+    write_file(password_file, "123456789");
 
     clear_screen();
     kprint("Wellcome to ArcOS ! \nPlease enter the password : \n> ");
@@ -69,6 +69,14 @@ void user_shell(char* input){
     char* datas;
     read_file(file, datas);
     kprint(datas);
+  } else if(strcmp(command, "WRITE") == 0){
+    char* filename[512];
+    str_clear(filename, 512);
+    char* datas[512];
+    str_clear(datas, 512);
+    split(arg, filename, datas);
+    file_struct* file = open_file(filename);
+    write_file(file, datas);
   } else if(strcmp(command, "LOCK") == 0){
     USER_LOGGED=0;
   }
