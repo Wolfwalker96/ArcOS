@@ -77,6 +77,8 @@ void user_shell(char* input){
     split(arg, filename, datas);
     file_struct* file = open_file(filename);
     write_file(file, datas);
+  } else if(strcmp(command, "CLEAR") == 0){
+    clear_screen();
   } else if(strcmp(command, "LOCK") == 0){
     USER_LOGGED=0;
   }
